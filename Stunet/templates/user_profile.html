@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title%}Création d'un profil{% endblock %}
+
+{% block bodyID %}userProfilePage{% endblock %}
+
+{% block content %}
+<h1>Création d'un compte</h1>
+<form>
+    <p>
+        <label for="profilType">Vous êtes: </label>
+        <select id="profilType"> 
+            <option value="student"  {% if studentForm.is_bound  %} selected="selected" {% endif%} > Étudiant</option>
+            <option value="employee" {% if employeeForm.is_bound %} selectes="selected" {%endif%} >Employé</option>
+
+        </select>
+    </p>
+</form>
+<form action="register" method="get" id="studentForm">
+    {{ studentForm.as_p }}
+    <p>
+        <input type="hidden" name="profileType" value="student"/>
+        <input type="submit" value="Créer un compte">
+    </p>
+</form>
+<form action="register" method="get" id="employeeForm">
+    {{ employeeForm.as_p }}
+    <p>
+        <input type="hidden" name="profileType" value="employee" >
+        <input type="submit" value="Créer un compte">
+    </p>
+</form>
+
+
+<script type="text/javascript" >
+
+    function displayRightForm() {
+        if ($('#profileType').val() == 'student'){
+            $('#employeeForm').hide();
+            $('#studentForm').show();
+        }
+        else {
+            $('#studentForm').hide();
+            $('#employeeForm').show();
+        }
+        $(document).ready(displayRightForm);
+        $('#profileType').change(displayRightForm);
+    }
+</script>
+
+{%endblock%}
